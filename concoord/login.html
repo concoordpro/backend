@@ -124,7 +124,7 @@
 		};
 
 		// REQUISIÇÃO POST COM AXIOS
-		axios.post('./Login', data)
+		axios.post('../Login', data)
 			.then(function (response) {
 				const matricula = data.matricula;
 				const nome = escreverUsuario(response.data);
