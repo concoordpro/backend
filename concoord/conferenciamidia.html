@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Projeto Concoord Web - Versão do Sistema : 15.0.0">
+	<meta name="author" content="Alex Luis Oliveira da Silva">
+	<meta name="prototyping" content="AdminKit">
+	<meta name="keywords" content="Correios Empresas, Concoord, CEM Recife">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-logo-48x48.png" />
+	<!--Lembrar de alterar o ícone de logo, com Corel Draw-->
+
+	<title>Concoord 15.0.0</title>
+
+	<link href="css/app.css" rel="stylesheet">
+	<link href="css/cnd.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body onload="setFocus()">
+	<div class="wrapper">
+
+		<script>
+
+			var matricula = sessionStorage.getItem("matricula");
+			var nome = sessionStorage.getItem("nome");
+			var setor = sessionStorage.getItem("setor");
+
+			if (matricula === null) {
+				window.location.href = "login.html";
+			}
+
+		</script>
+
+		<!--MENU LATERAL-->
+
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<img class="mb-0" src="img/bkg/sidebar-top.png" alt="Logo Concoord">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+				</a>
+
+				<div id="menu">
+
+				</div>
+
+			</div>
+		</nav>
+
+		<!--MENU EXPANSIVO-->
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+
+				<!--BARRA SUPERIOR-->
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+
+						<li class="nav-item dropdown d-flex">
+							<div class="align-items-center justify-content-center d-flex text-muted mb-0 h5-5"
+								id="nome">
+								USUÁRIO</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="subbody content">
+
+				<!--TITULO DO PAINEL-->
+
+				<div class="container-fluid p-0">
+					<img class="logotopo mb-3 " src="img/icons/logo_correios_360_menor.png" alt="">
+					<h1 class="htitulo mb-1 titulo-login">
+						<img src="img/icons/logo-concoord-cinza.png" alt=""
+							style="vertical-align: middle; margin-top: -5px;">
+						Mídias de Postagem
+					</h1>
+					<h6 class="mb-3 text-secondary">Conferência e Validação</h6>
+					<div class="row">
+						<div class="col-md-4 d-flex mb-1">
+							<select id="selectMidias" class="form-select" onchange="selecionarMidia()">
+								<option selected>Selecione uma Mídia de Postagem</option>
+							</select>
+						</div>
+					</div>
+					<div class="h4 text-muted" id="nomeArquivo"></div>
+					<hr>
+
+					<div class="row">
+						<div class="col-md-4">
+							<div class="h6">Código de Rastreamento</div>
+							<input type="text" id="objeto" placeholder="Objeto"
+								class="form-control form-control-lg mb-2" disabled>
+						</div>
+						<div class="col-md-2">
+							<div class="h6">CEP</div>
+							<input type="text" id="cep" placeholder="CEP" class="form-control form-control-lg mb-2"
+								disabled>
+						</div>
+						<div class="col-md-2">
+							<div class="h6">&nbsp</div>
+							<button id="validar" class="col-md-8 btn btn-primary btn-lg mb-2"
+								onclick="verConexao()">Validar
+								Objeto</button>
+						</div>
+
+					</div>
+					<hr>
+
+					<div class="col-md-1">
+
+					</div>
+
+					<div class="row mb-0">
+
+						<div class="text-muted" id="nTipo" style="display: none;">nTipo</div>
+						<div class="text-muted" id="dTipo" style="display: none;">dTipo</div>
+
+						<div class="col-md-2 d-flex">
+							<select id="tipoObjeto" class="form-select mb-3" onchange="selecionarTipoObjeto()" disabled>
+								<option selected>Tipo de Objeto</option>
+								<option>Pacote</option>
+								<option>Envelope</option>
+								<option>Cilindro</option>
+								<option>CSRA - Passaporte</option>
+							</select>
+						</div>
+
+						<div class="col-md-3 ms-auto">
+							<div class="text-muted mb-0 nav-text" id="Cliente">Cliente</div>
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-md-1">
+							<div class="h6">Altura</div>
+							<input type="text" id="altura" placeholder="" class="form-control form-control-lg mb-2"
+								disabled>
+
+						</div>
+						<div class="col-md-1">
+							<div class="h6">Largura</div>
+							<input type="text" id="largura" placeholder="" class="form-control form-control-lg mb-2"
+								disabled>
+						</div>
+						<div class="col-md-1">
+							<div class="h6">Comprimento</div>
+							<input type="text" id="comprimento" placeholder="" class="form-control form-control-lg mb-2"
+								disabled>
+						</div>
+						<div class="col-md-1">
+							<div class="h6">Diâmetro</div>
+							<input type="text" id="diametro" placeholder="" class="form-control form-control-lg mb-2"
+								disabled>
+						</div>
+						<div class="col-md-2">
+							<input id="fixarDimensoes" class="form-check-input" type="checkbox" value="travaDimensoes"
+								disabled>
+							<span class="h6 form-check-label"> Fixar Dimensões </span>
+						</div>
+						<div class="col-md-1">
+							<div class="h6">Peso</div>
+							<input type="text" id="peso" placeholder="" class="form-control form-control-lg mb-2"
+								disabled>
+
+						</div>
+
+						<div class="col-md-2">
+							<input id="fixarPeso" class="form-check-input" type="checkbox" value="travaPeso" disabled>
+							<span class="h6 form-check-label"> Fixar Peso </span>
+						</div>
+						<div class="col-md-1">
+							<div class="h6 text-end">Total na Mídia</div>
+							<div id="Total" class="h7 text-end">0</div>
+						</div>
+						<div class="col-md-1">
+							<div class="h6 text-end">Validados</div>
+							<div id="Validados" class="h7 text-end">0</div>
+						</div>
+						<div class="col-md-1">
+							<div class="h6 text-end">Pelo Usuário</div>
+							<div id="peloUsuario" class="h7 text-end">0</div>
+						</div>
+					</div>
+
+
+					<hr>
+
+					<!--MOSTRADORES-->
+
+					<div class="card-header border card mb-2 bg-danger" id="alerta"
+						style="max-height: 63px; display: none;">
+						<h2 class="h2  text-white " id="textoAviso">Mensagem de Alerta</h2>
+					</div>
+					<div class="card shadow border mb-0">
+
+						<div class="card-header card text-white" id="CardPlanos"
+							style="min-height: 160px; max-height: 170px;">
+							<h8 class="h8" id="Planos"></h8>
+							<div class="col-md-2">
+								<div class="h6">&nbsp</div>
+								<div id="loaderPlanos" class="loaderPlanos"></div>
+
+							</div>
+						</div>
+						<div class="card-footer" style="min-height: 140px;">
+							<div class="text-muted" id="servico" style="display: none;"></div>
+							<div class="h4 text-muted" id="espelhoObjeto"></div>
+							<div class="h4" id="nome_destinatario"></div>
+							<div class="h5 text-muted" id="logradouro_destinatario"></div>
+							<div class="h5 text-muted" id="numero_end_destinatario"></div>
+							<div class="h5 text-muted" id="complemento_destinatario"></div>
+							<div class="h5 text-muted" id="bairro_destinatario"></div>
+							<div class="row d-flex">
+								<div class="h4 col-3" id="cidade_destinatario"></div>
+								<div class="h4 col-1" id="uf_destinatario"></div>
+							</div>
+							<div class="h4" id="cep_destinatario"></div>
+						</div>
+					</div>
+				</div>
+				<hr>
+
+				<div class="row">
+					<div id="statuscubo" class="h4 col-md-6 text-info ">
+
+					</div>
+
+					<div class="col-md-2">
+						<button id="cubometro" class="col-md-12 btn btn-secondary btn-lg mb-2" onclick="conectarCubo()">
+							Conectar Cubômetro</button>
+					</div>
+
+					<div class="col-md-2">
+						<button id="relatorio" class="col-md-12 btn btn-primary btn-lg mb-2"
+							onclick="GerarRelatorioXML()">Relatório de
+							Validações</button>
+					</div>
+
+					<div class="col-md-2">
+						<button id="finalizar" class="col-md-12 btn btn-success btn-lg mb-2"
+							onclick="finalizarMidia()">Finalizar
+							Mídia</button>
+					</div>
+
+					<div>
+						<br><br>
+					</div>
+
+				</div>
+
+				<!--DIV FLUTUANTE - CEP DESMEMBRADO-->
+
+				<div id="Selecao" class="box-selecao card bg-secondary shadow border">
+					<div class="h4 text-white mb-3" id="textoSelecao"></div>
+				</div>
+
+			</main>
+
+			<!--RODAPÉ-->
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted mb-0 h6" href="" target="_blank">
+										CONCOORD 15 - Plataforma Web
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-6 text-end">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="h6" href="" target="_blank">Ajuda</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="h6" href="" target="_blank">Termos de Uso</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="h6" href="" target="_blank">Privacidade</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+
+</body>
+
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+	document.getElementById('validar').style.display = 'none';
+	document.getElementById('cubometro').style.display = 'none';
+	document.getElementById('relatorio').style.display = 'none';
+	document.getElementById('finalizar').style.display = 'none';
+	document.getElementById('loaderPlanos').style.display = 'none';
+</script>
+
+<script>
+	// SELECIONAR CAMPO 'OBJETO' AO ABRIR A PÁGINA
+	function setFocus() {
+
+		var inputElement = document.getElementById('objeto');
+		inputElement.focus();
+
+	}
+</script>
+
+<script>
+	// REQUISIÇÃO GET COM AXIOS
+	axios.get('../conferenciamidia')
+		.then(function (response) {
+
+			var selectMidias = document.getElementById('selectMidias');
+			response.data.arquivos.forEach(function (arquivo) {
+				var option = document.createElement('option');
+				option.text = arquivo;
+				selectMidias.add(option);
+			});
+
+		})
+		.catch(function (error) {
+			console.error(error);
+			alert("Ocorreu um erro no servidor. Tente novamente.");
+		});
+
+</script>
+
+<script>
+
+	// VALIDAÇÃO DO INPUT
+	function verificarObjeto() {
+		var objeto = document.getElementById('objeto').value;
+
+		// CASO VAZIO
+		if (objeto.trim() === "") {
+			alert("Por favor, informe o código do objeto.");
+			document.getElementById('objeto').select();
+			return false; // IMPEDE O ENVIO DO FORMULARIO CASO VAZIO
+		}
+		// CASO POSSUA UM FORMATO DE ETIQUETA VÁLIDA
+		else if (/^[a-zA-Z]{2}\d{9}[a-zA-Z]{2}$/.test(objeto)) {
+			// CONVERTE MAIUSCULAS
+			var texto = document.getElementById('objeto').value;
+			var maiusc = texto.toUpperCase();
+			document.getElementById('objeto').value = maiusc;
+			document.getElementById('objeto').select();
+			localizarObjeto();
+		}
+		// CASO QRCODE
+		else if (objeto.length > 20 && /([a-zA-Z]{2}\d{9}[a-zA-Z]{2})/.test(objeto)) {
+			document.getElementById('objeto').value = objeto.match(/([a-zA-Z]{2}\d{9}[a-zA-Z]{2})/)[0];
+			document.getElementById('objeto').select();
+			//enviarRequisicao();
+			localizarObjeto();
+		}
+		// CASO NENHUM DOS CASOS ANTERIORES SEJA SATISFEITO
+		else {
+			document.getElementById('objeto').select();
+		}
+
+	}
+
+	// ADICIONA UM OUVINTE NO INPUT, PARA A TECLA ENTER
+	document.getElementById('objeto').addEventListener('keyup', function (event) {
+
+		document.getElementById("alerta").style.display = 'none';
+		document.getElementById('espelhoObjeto').innerHTML = "";
+		document.getElementById('nome_destinatario').innerHTML = "";
+		document.getElementById('logradouro_destinatario').innerHTML = "";
+		document.getElementById('complemento_destinatario').innerHTML = "";
+		document.getElementById('bairro_destinatario').innerHTML = "";
+		document.getElementById('cidade_destinatario').innerHTML = "";
+		document.getElementById('uf_destinatario').innerHTML = "";
+		document.getElementById('cep_destinatario').innerHTML = "";
+		document.getElementById('CardPlanos').classList.remove('bg-primary');
+		document.getElementById('CardPlanos').classList.remove('bg-secondary');
+		document.getElementById('CardPlanos').classList.remove('bg-success');
+		document.getElementById('CardPlanos').classList.remove('bg-danger');
+		document.getElementById('CardPlanos').classList.remove('bg-warning');
+		document.getElementById('CardPlanos').classList.remove('bg-info');
+		document.getElementById('CardPlanos').classList.remove('bg-light');
+		document.getElementById('CardPlanos').classList.remove('bg-dark');
+		document.getElementById('CardPlanos').classList.remove('text-dark');
+		document.getElementById('CardPlanos').classList.remove('text-white');
+		document.getElementById('Planos').classList.remove('piscar');
+		document.getElementById('Planos').innerHTML = " ";
+		document.getElementById('cep').value = "";
+		if (document.getElementById('altura').disabled === false) { document.getElementById('altura').value = ''; }
+		if (document.getElementById('largura').disabled === false) { document.getElementById('largura').value = ''; }
+		if (document.getElementById('comprimento').disabled === false) { document.getElementById('comprimento').value = ''; }
+		if (document.getElementById('diametro').disabled === false) { document.getElementById('diametro').value = ''; }
+		if (document.getElementById('peso').disabled === false) { document.getElementById('peso').value = ''; }
+
+		if (event.key === 'Enter') {
+			verificarObjeto();
+		}
+	});
+
+</script>
+
+<script>
+
+	function buscarCEP() {
+
+		document.getElementById('loaderPlanos').style.display = 'block';
+		document.getElementById('validar').disabled = true;
+
+		var cep = document.getElementById("cep").value;
+
+		var data = {
+			conteudo: cep
+		};
+
+		var tabela = {
+			linha: []
+		};
+
+		var axiosConfig = {
+			timeout: 5000, // Timeout de 10 segundos (ajustar conforme necessário)
+		};
+
+		// REQUISIÇÃO POST COM AXIOS
+		axios.post('../BuscaCEP', data)
+			.then(function (response) {
+				console.log(response.data);
+
+				if (response.data.status.includes('CEP NÃO ENCONTRADO')) {
+					document.getElementById("alerta").style.display = 'block';
+					document.getElementById("textoAviso").innerHTML = 'CEP não Encontrado.';
+					document.getElementById("cep").focus();
+					document.getElementById('loaderPlanos').style.display = 'none';
+					document.getElementById('validar').disabled = false;
+
+				} else if (response.data.status.includes('alterado')) {
+					document.getElementById("alerta").style.display = 'block';
+					document.getElementById("textoAviso").innerHTML = `Atenção: Este CEP foi alterado para  ${response.data.tabela[3]}.`
+					document.getElementById("cep").focus();
+					document.getElementById('loaderPlanos').style.display = 'none';
+					document.getElementById('validar').disabled = false;
+
+				} else if (response.data.status.includes('desmembrado')) {
+
+					let tabelaHtml = '<table class="table">';
+
+					for (let i = 0; i < response.data.tabela.length; i++) {
+
+						if (i % 4 === 0) {
+							tabelaHtml += '<tr>';
+						}
+
+						if (i % 4 === 0) {
+							tabelaHtml += `<td>
+                              <input type="checkbox" name="selecao" value="${i}" onclick="selecionarCEPDesmembrado(this)">
+                           </td>`;
+						}
+
+						tabelaHtml += `<td class = "text-white mb-0">${response.data.tabela[i]}</td>`;
+
+						if ((i + 1) % 4 === 0) {
+							tabelaHtml += '</tr>';
+						}
+
+					}
+
+					if (response.data.tabela.length % 4 !== 0) {
+						tabelaHtml += '</tr>';
+					}
+
+					tabelaHtml += '</table>';
+
+					selectbox(`<br>${response.data.status} <br><br> Selecione o CEP correspondente ao endereço constante no objeto: <br><br>${tabelaHtml}`);
+					document.getElementById('loaderPlanos').style.display = 'none';
+					document.getElementById('validar').disabled = false;
+
+				} else if (response.data.status.includes('msg')) {
+
+					document.getElementById('cidade_destinatario').innerHTML = response.data.tabela[2].slice(0, -3);
+					document.getElementById('uf_destinatario').innerHTML = response.data.tabela[2].slice(-2);
+					document.getElementById('cep_destinatario').innerHTML = document.getElementById('cep').value
+					alterarXML();
+					document.getElementById('loaderPlanos').style.display = 'none';
+					document.getElementById('validar').disabled = false;
+
+				} else {
+
+					alert('A API CEP Correios retornou um erro. Tente novamente.')
+
+				};
+
+			})
+			.catch(function (error) {
+				console.error(error);
+
+				if (axios.isCancel(error)) {
+					alert("A API CEP Correios demorou muito tempo para responder. Tente novamente.");
+					document.getElementById('loaderPlanos').style.display = 'none';
+					document.getElementById('validar').disabled = false;
+				} else {
+					alert("Ocorreu um erro no servidor. Tente novamente.");
+				}
+			});
+
+
+	}
+
+	// ADICIONA UM OUVINTE NO CEP, PARA A TECLA ENTER
+	document.getElementById('cep').addEventListener('keyup', function (event) {
+
+		if (event.key === 'Enter') {
+			document.getElementById("validar").focus();
+
+			verConexao();
+		}
+	});
+
+</script>
+
+<script>
+
+	function selecionarCEPDesmembrado(checkbox) {
+		if (checkbox.checked) {
+
+			let linha = checkbox.parentNode.parentNode;
+			let celulas = linha.getElementsByTagName('td');
+			let ultimaCelula = celulas[celulas.length - 1];
+			let valorUltimaCelula = ultimaCelula.innerText;
+			let penultimaCelula = celulas[celulas.length - 2];
+			let valorpenultimaCelula = penultimaCelula.innerText;
+
+			document.getElementById('cep').value = valorUltimaCelula.replace("-", "");
+			document.getElementById("Selecao").style.display = "none";
+			document.getElementById('cidade_destinatario').innerHTML = valorpenultimaCelula.slice(0, -3);
+			document.getElementById('uf_destinatario').innerHTML = valorpenultimaCelula.slice(-2);
+			document.getElementById('cep_destinatario').innerHTML = document.getElementById('cep').value
+
+			alterarXML();
+		}
+	}
+
+</script>
+
+<script>
+
+	var matricula = sessionStorage.getItem("matricula");
+	var nome = sessionStorage.getItem("nome");
+	var setor = sessionStorage.getItem("setor");
+	var mcu = sessionStorage.getItem("mcu");
+	document.getElementById('nome').innerHTML = mcu + " - " + setor + "&nbsp&nbsp | &nbsp&nbsp" + nome;
+
+</script>
+
+<script>
+
+	function selectbox(texto) {
+		document.getElementById("textoSelecao").innerHTML = texto;
+		document.getElementById("Selecao").style.display = "block";
+
+	}
+
+</script>
+
+<script>
+	function selecionarTipoObjeto() {
+
+		var tipoObjeto = document.getElementById('tipoObjeto');
+
+		if (tipoObjeto.options[0].value === 'Tipo de Objeto') {
+			tipoObjeto.remove(0);
+
+		}
+
+		document.getElementById('altura').disabled = true;
+		document.getElementById('largura').disabled = true;
+		document.getElementById('comprimento').disabled = true;
+		document.getElementById('diametro').disabled = true;
+		document.getElementById('altura').value = '';
+		document.getElementById('largura').value = '';
+		document.getElementById('comprimento').value = '';
+		document.getElementById('diametro').value = '';
+
+		if (tipoObjeto.value === 'Pacote') {
+			document.getElementById('altura').disabled = false;
+			document.getElementById('largura').disabled = false;
+			document.getElementById('comprimento').disabled = false;
+			document.getElementById('diametro').disabled = true;
+			document.getElementById('fixarDimensoes').checked = false;
+			document.getElementById('diametro').value = 0;
+			document.getElementById('nTipo').innerHTML = '002';
+			document.getElementById('dTipo').innerHTML = 'PACOTE';
+		} else if (tipoObjeto.value === 'Envelope') {
+			document.getElementById('altura').disabled = true;
+			document.getElementById('largura').disabled = false;
+			document.getElementById('comprimento').disabled = false;
+			document.getElementById('diametro').disabled = true;
+			document.getElementById('fixarDimensoes').checked = false;
+			document.getElementById('altura').value = 0;
+			document.getElementById('diametro').value = 0;
+			document.getElementById('nTipo').innerHTML = '001';
+			document.getElementById('dTipo').innerHTML = 'ENVELOPE';
+		} else if (tipoObjeto.value === 'Cilindro') {
+			document.getElementById('altura').disabled = true;
+			document.getElementById('largura').disabled = true;
+			document.getElementById('comprimento').disabled = false;
+			document.getElementById('diametro').disabled = false;
+			document.getElementById('fixarDimensoes').checked = false;
+			document.getElementById('altura').value = 0;
+			document.getElementById('largura').value = 0;
+			document.getElementById('nTipo').innerHTML = '003';
+			document.getElementById('dTipo').innerHTML = 'PACOTE';
+		} else if (tipoObjeto.value === 'CSRA - Passaporte') {
+			document.getElementById('altura').disabled = true;
+			document.getElementById('largura').disabled = true;
+			document.getElementById('comprimento').disabled = true;
+			document.getElementById('diametro').disabled = true;
+			document.getElementById('altura').value = 0;
+			document.getElementById('diametro').value = 0;
+			document.getElementById('largura').value = '18';
+			document.getElementById('comprimento').value = '21';
+			document.getElementById('peso').value = '300';
+			document.getElementById('peso').disabled = true;
+			document.getElementById('fixarDimensoes').checked = true;
+			document.getElementById('fixarPeso').checked = true;
+			document.getElementById('nTipo').innerHTML = '001';
+			document.getElementById('dTipo').innerHTML = 'ENVELOPE';
+		}
+	}
+
+	document.getElementById('fixarDimensoes').addEventListener('change', function () {
+
+		if (this.checked) {
+			document.getElementById('altura').disabled = true;
+			document.getElementById('largura').disabled = true;
+			document.getElementById('comprimento').disabled = true;
+			document.getElementById('diametro').disabled = true;
+		} else {
+			selecionarTipoObjeto();
+		};
+
+	});
+
+	document.getElementById('fixarPeso').addEventListener('change', function () {
+
+		if (this.checked) {
+			document.getElementById('peso').disabled = true;
+		} else {
+			document.getElementById('peso').disabled = false;
+		};
+
+	});
+
+</script>
+
+<script>
+
+	function validarObjeto() {
+
+		document.getElementById("alerta").style.display = 'none';
+
+		var cep_destinatario = document.getElementById("cep_destinatario");
+		var tipoObjeto = document.getElementById('tipoObjeto');
+		var altura = document.getElementById("altura");
+		var largura = document.getElementById("largura");
+		var comprimento = document.getElementById("comprimento");
+		var diametro = document.getElementById("diametro");
+		var peso = document.getElementById("peso");
+		var cep = document.getElementById("cep");
+
+		if (cep_destinatario.innerHTML === '') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Objeto Inválido';
+			document.getElementById("objeto").focus();
+		} else if (tipoObjeto.value === 'Tipo de Objeto') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Selecione um tipo de objeto';
+			document.getElementById("tipoObjeto").focus();
+		} else if (altura.disabled === false && altura.value === '') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Verifique a Altura';
+			document.getElementById("altura").focus();
+		} else if (largura.disabled === false && largura.value === '') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Verifique a Largura';
+			document.getElementById("largura").focus();
+		} else if (comprimento.disabled === false && comprimento.value === '') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Verifique o Comprimento';
+			document.getElementById("comprimento").focus();
+		} else if (diametro.disabled === false && diametro.value === '') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Verifique o Diametro';
+			document.getElementById("diametro").focus();
+		} else if (altura.value === '' || largura.value === '' || comprimento.value === '' || diametro.value === '') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Verifique as Dimensões';
+		} else if (peso.value === '') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Verifique o Peso';
+			document.getElementById("peso").focus();
+		} else if (cep.value === '') {
+			document.getElementById("alerta").style.display = 'block';
+			document.getElementById("textoAviso").innerHTML = 'Verifique o CEP';
+			document.getElementById("cep").focus();
+		} else {
+			buscarCEP();
+		}
+
+	};
+
+</script>
+
+<script>
+
+	function selecionarMidia() {
+
+		const midia = document.getElementById('selectMidias').value;
+		if (midia !== 'Selecione uma Mídia de Postagem') {
+
+			document.getElementById('nomeArquivo').innerHTML = document.getElementById('selectMidias').value;
+			document.getElementById('selectMidias').style.display = 'none';
+			document.getElementById('validar').style.display = 'block';
+			document.getElementById('cubometro').style.display = 'block';
+			document.getElementById('relatorio').style.display = 'block';
+			document.getElementById('finalizar').style.display = 'block';
+			document.getElementById('objeto').disabled = false;
+			document.getElementById('cep').disabled = false;
+			document.getElementById('tipoObjeto').disabled = false;
+			document.getElementById('fixarDimensoes').disabled = false;
+			document.getElementById('peso').disabled = false;
+			document.getElementById('fixarPeso').disabled = false;
+			contarXML();
+
+		}
+
+	}
+
+
+</script>
+
+<script>
+
+	function contarXML() {
+
+		var nomeArquivo = document.getElementById("nomeArquivo").innerHTML;
+
+		if (nomeArquivo !== '') {
+
+
+			var data = {
+				nomeArquivo: nomeArquivo,
+				matricula: sessionStorage.getItem("matricula")
+			};
+
+			axios.post('../ContarXML', data)
+				.then(function (response) {
+
+					document.getElementById("Cliente").innerHTML = response.data.validados.cliente;
+					document.getElementById("Total").innerHTML = response.data.validados.total;
+					document.getElementById("Validados").innerHTML = response.data.validados.validados;
+					document.getElementById("peloUsuario").innerHTML = response.data.validados.peloUsuario;
+				})
+				.catch(function (error) {
+					console.error(error);
+					alert("Ocorreu um erro no servidor. Tente novamente.");
+				});
+
+		}
+	}
+
+
+	setInterval(contarXML, 3000);
+
+
+</script>
+
+<script>
+
+	function localizarObjeto() {
+
+		var nomeArquivo = document.getElementById("nomeArquivo").innerHTML;
+		var objeto = document.getElementById("objeto").value;
+
+		var data = {
+			nomeArquivo: nomeArquivo,
+			objeto: objeto
+		};
+
+		// DADOS
+		const dados = {
+			numero_etiqueta: 'numero_etiqueta',
+			peso: 'peso',
+			nome_destinatario: 'nome_destinatario',
+			logradouro_destinatario: 'logradouro_destinatario',
+			complemento_destinatario: 'complemento_destinatario',
+			numero_end_destinatario: 'numero_end_destinatario',
+			bairro_destinatario: 'bairro_destinatario',
+			cidade_destinatario: 'cidade_destinatario',
+			uf_destinatario: 'uf_destinatario',
+			cep_destinatario: 'cep_destinatario',
+			tipo_objeto: 'tipo_objeto',
+			dimensao_altura: 'dimensao_altura',
+			dimensao_largura: 'dimensao_largura',
+			dimensao_comprimento: 'dimensao_comprimento',
+			dimensao_diametro: 'dimensao_diametro',
+		}
+
+		axios.post('../LocalizarObjXML', data)
+			.then(function (response) {
+
+				if (response.data.nome_destinatario !== undefined) {
+
+					document.getElementById('espelhoObjeto').innerHTML = document.getElementById('objeto').value;
+					document.getElementById('nome_destinatario').innerHTML = response.data.nome_destinatario;
+					document.getElementById('logradouro_destinatario').innerHTML = response.data.logradouro_destinatario;
+					document.getElementById('complemento_destinatario').innerHTML = response.data.complemento_destinatario;
+					document.getElementById('bairro_destinatario').innerHTML = response.data.bairro_destinatario;
+					document.getElementById('cidade_destinatario').innerHTML = response.data.cidade_destinatario;
+					document.getElementById('uf_destinatario').innerHTML = response.data.uf_destinatario;
+					document.getElementById('cep_destinatario').innerHTML = response.data.cep_destinatario;
+
+					var FixarDimensoes = document.getElementById('fixarDimensoes');
+
+					if (document.getElementById('altura').disabled === false) { document.getElementById('altura').value = response.data.altura; }
+					if (document.getElementById('largura').disabled === false) { document.getElementById('largura').value = response.data.largura; }
+					if (document.getElementById('comprimento').disabled === false) { document.getElementById('comprimento').value = response.data.comprimento; }
+					if (document.getElementById('diametro').disabled === false) { document.getElementById('diametro').value = response.data.diametro; }
+
+					if (response.data.servico === '03280') { document.getElementById('servico').innerHTML = 'SEDEX'; };
+					if (response.data.servico === '03220') { document.getElementById('servico').innerHTML = 'SEDEX'; };
+
+					if (document.getElementById('peso').disabled === false) { document.getElementById('peso').value = response.data.peso; }
+
+					document.getElementById("cep").focus();
+
+
+				} else {
+
+					document.getElementById("alerta").style.display = 'block';
+					document.getElementById("textoAviso").innerHTML = 'Objeto não encontrado na mídia!';
+					document.getElementById("objeto").focus();
+				}
+
+			})
+			.catch(function (error) {
+				console.error(error);
+				alert("Ocorreu um erro no servidor. Tente novamente.");
+			});
+
+	}
+
+
+</script>
+
+<script>
+
+	function alterarXML() {
+
+		// DADOS
+		const data = {
+
+			matricula: sessionStorage.getItem("matricula"),
+
+			nomeArquivo: document.getElementById("nomeArquivo").innerHTML,
+			objeto: document.getElementById("objeto").value,
+
+			peso: document.getElementById("peso").value,
+			cidade_destinatario: document.getElementById("cidade_destinatario").innerHTML,
+			uf_destinatario: document.getElementById("uf_destinatario").innerHTML,
+			cep_destinatario: document.getElementById("cep").value,
+
+			tipo_objeto: document.getElementById("nTipo").innerHTML,
+			dimensao_altura: document.getElementById("altura").value,
+			dimensao_largura: document.getElementById("largura").value,
+			dimensao_comprimento: document.getElementById("comprimento").value,
+			dimensao_diametro: document.getElementById("diametro").value,
+		}
+
+		axios.post('../AlterarObjXML', data)
+			.then(function (response) {
+
+				console.log(response);
+
+			})
+			.catch(function (error) {
+				console.error(error);
+				alert("Ocorreu um erro no servidor. Tente novamente.");
+			});
+
+
+		buscaPlanos();
+		document.getElementById("objeto").focus();
+
+	}
+
+</script>
+
+<script>
+
+	function buscaPlanos() {
+
+		var cep = document.getElementById("cep").value;
+		var servico = document.getElementById("servico").innerHTML;
+		var tipoObjeto = document.getElementById("dTipo").innerHTML;
+
+		var data = {
+			conteudo: cep
+		};
+
+		// REQUISIÇÃO POST COM AXIOS
+		axios.post('../Planos', data)
+			.then(function (response) {
+				console.log(response.data);
+
+				if (servico === 'SEDEX' && tipoObjeto === 'PACOTE') {
+					document.getElementById('Planos').innerHTML = response.data.planoExpedicao1;
+					document.getElementById('CardPlanos').classList.add(response.data.corFundo1);
+					document.getElementById('CardPlanos').classList.add(response.data.corTexto1);
+					document.getElementById('Planos').classList.add('piscar');
+				}
+				if (servico === 'PAC') {
+					document.getElementById('Planos').innerHTML = response.data.planoExpedicao2;
+					document.getElementById('CardPlanos').classList.add(response.data.corFundo2);
+					document.getElementById('CardPlanos').classList.add(response.data.corTexto2);
+					document.getElementById('Planos').classList.add('piscar');
+				}
+				if (servico === 'SEDEX' && tipoObjeto === 'ENVELOPE') {
+					document.getElementById('Planos').innerHTML = response.data.planoExpedicao3;
+					document.getElementById('CardPlanos').classList.add(response.data.corFundo3);
+					document.getElementById('CardPlanos').classList.add(response.data.corTexto3);
+					document.getElementById('Planos').classList.add('piscar');
+				}
+
+				document.getElementById("cep").value = "";
+				document.getElementById("objeto").value = "";
+				document.getElementById("objeto").focus();
+
+			})
+			.catch(function (error) {
+				// TRATAMENTO DE ERROS
+				console.error(error);
+				alert("Ocorreu um erro no servidor. Tente novamente.");
+			});
+
+
+	}
+
+</script>
+
+<script>
+
+	function finalizarMidia() {
+
+		var nomeArquivo = document.getElementById("nomeArquivo").innerHTML;
+		var dataAtual = new Date();
+		var dia = dataAtual.getDate();
+		var mes = dataAtual.getMonth() + 1;
+		var ano = dataAtual.getFullYear();
+
+		dia = dia < 10 ? '0' + dia : dia;
+		mes = mes < 10 ? '0' + mes : mes;
+
+		var dataFormatada = dia + ' ' + mes + ' ' + ano;
+
+		var cliente = document.getElementById("Cliente").innerHTML;
+
+		var data = {
+			nomeArquivo: nomeArquivo,
+		};
+
+		axios.post('../FinalizarXML', data)
+			.then(function (response) {
+
+				if (response.data) {
+
+					var blob = new Blob([response.data], { type: 'application/xml' });
+					var link = document.createElement('a');
+
+					link.href = window.URL.createObjectURL(blob);
+					link.download = `CONCOORD_${cliente}_${dataFormatada}.xml`;
+					link.click();
+
+				} else {
+					console.error('Resposta do servidor não contém dados para download.');
+				}
+
+			})
+			.catch(function (error) {
+				console.error(error);
+				alert("Ocorreu um erro no servidor. Tente novamente.");
+			});
+
+	}
+
+</script>
+
+<script>
+
+	function buscarCubo() {
+
+		const objeto = document.getElementById("objeto").value;
+		const cep = document.getElementById("cep").value;
+
+		var data = {
+			objeto: objeto,
+			cep: cep
+		};
+
+		// REQUISIÇÃO GET COM AXIOS
+		axios.post('../BuscaCubo', data)
+			.then(function (response) {
+
+				console.log(response.data);
+		
+					tipoObjeto.value = 'Pacote'
+					document.getElementById('altura').disabled = false;
+					document.getElementById('largura').disabled = false;
+					document.getElementById('comprimento').disabled = false;
+					document.getElementById('diametro').disabled = true;
+					document.getElementById('fixarDimensoes').checked = false;
+					document.getElementById('fixarPeso').checked = false;
+					document.getElementById('diametro').value = 0;
+					document.getElementById('nTipo').innerHTML = '002';
+					document.getElementById('dTipo').innerHTML = 'PACOTE';
+
+					document.getElementById("altura").value = response.data.y.replace(" cm", "").replace(".", ",");
+					document.getElementById("largura").value = response.data.z.replace(" cm", "").replace(".", ",");
+					document.getElementById("comprimento").value = response.data.x.replace(" cm", "").replace(".", ",");
+					document.getElementById("peso").value = response.data.peso.replace("g", "");
+					const peso = document.getElementById("peso").value;
+					document.getElementById("peso").value = ajustarPeso(peso);
+				
+
+				document.getElementById("objeto").focus();
+
+				validarObjeto();
+			})
+			.catch(function (error) {
+				console.error(error);
+				alert("Conexão com o Cubômetro perdida. Verifique a Rede.");
+			});
+	}
+
+</script>
+
+<script>
+
+	function GerarRelatorioXML() {
+
+		var nomeArquivo = document.getElementById("nomeArquivo").innerHTML;
+
+		if (nomeArquivo !== '') {
+
+			var data = {
+				nomeArquivo: nomeArquivo,
+			};
+
+			axios.post('../RelatorioXML', data)
+				.then(function (response) {
+
+					console.log(response);
+					// Chama as funções
+					const tabelaRelatorio = criarTabela(response.data);
+					abrirNovaAba(tabelaRelatorio);
+
+				})
+				.catch(function (error) {
+					console.error(error);
+					alert("Ocorreu um erro no servidor. Tente novamente.");
+				});
+
+		}
+	}
+
+
+	function criarTabela(relatorio) {
+		const tabela = document.createElement('table');
+
+
+		const corpoTabela = tabela.createTBody();
+
+		for (const usuario in relatorio) {
+			if (relatorio.hasOwnProperty(usuario) && Array.isArray(relatorio[usuario])) {
+				// Adiciona uma linha em branco entre usuários, exceto para o primeiro usuário
+				if (corpoTabela.rows.length > 0) {
+					const linhaEmBranco = corpoTabela.insertRow();
+					const celulaEmBranco = linhaEmBranco.insertCell();
+					celulaEmBranco.colSpan = 2;
+					celulaEmBranco.textContent = "------------------------------------------"
+				}
+
+				// Adiciona um cabeçalho de seção para cada usuário
+				const linhaCabecalhoUsuario = corpoTabela.insertRow();
+				const celulaCabecalhoUsuario = linhaCabecalhoUsuario.insertCell();
+				celulaCabecalhoUsuario.colSpan = 2;
+				celulaCabecalhoUsuario.textContent = usuario;
+
+				// Adiciona dados à tabela para cada item no usuário
+				relatorio[usuario].forEach((item) => {
+					const linha = corpoTabela.insertRow();
+
+					// Adiciona dados à linha
+					const celulaNumeroEtiqueta = linha.insertCell();
+					celulaNumeroEtiqueta.textContent = item.numero_etiqueta;
+
+					const celulaNomeDestinatario = linha.insertCell();
+					celulaNomeDestinatario.textContent = item.nome_destinatario;
+				});
+			}
+		}
+
+		return tabela;
+	}
+
+
+	// Função para abrir uma nova aba com a tabela
+	function abrirNovaAba(tabela) {
+		const novaAba = window.open('', '_blank');
+
+		const linkFont = novaAba.document.createElement('link');
+		linkFont.rel = 'stylesheet';
+		linkFont.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap'; // Substitua pelo caminho real do seu arquivo CSS
+		novaAba.document.head.appendChild(linkFont);
+
+		const styleElement = novaAba.document.createElement('style');
+		styleElement.innerHTML = `
+        body {
+			font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+        }
+        .h6b {
+            color: rgb(78, 79, 102);
+			font-size: 150%;
+    		font-weight: 800;
+        }
+		.h7b {
+            color: rgb(78, 79, 102);
+			font-size: 100%;
+    		font-weight: 800;
+        }
+    `;
+		novaAba.document.head.appendChild(styleElement);
+
+
+		// Adiciona a tabela à nova aba
+		const Div1 = novaAba.document.createElement('div');
+		Div1.classList.add('h6b');
+		Div1.innerHTML = "RELATÓRIO DE VERIFICAÇÃO DE MÍDIA"
+		novaAba.document.body.appendChild(Div1);
+
+		const Div2 = novaAba.document.createElement('div');
+		Div2.classList.add('h7b');
+		Div2.innerHTML = document.getElementById("Cliente").innerHTML
+		novaAba.document.body.appendChild(Div2);
+
+		const Div3 = novaAba.document.createElement('div');
+		Div3.classList.add('h7b');
+		Div3.innerHTML = document.getElementById("nomeArquivo").innerHTML
+		novaAba.document.body.appendChild(Div3);
+
+		const Div4 = novaAba.document.createElement('hr');
+		novaAba.document.body.appendChild(Div4);
+
+		const Div60 = novaAba.document.createElement('br');
+		novaAba.document.body.appendChild(Div60);
+
+		const Div5 = novaAba.document.createElement('div');
+		Div5.classList.add('h7b');
+		Div5.innerHTML = 'OBJETOS VALIDADOS POR USUÁRIO:'
+		novaAba.document.body.appendChild(Div5);
+
+		const Div61 = novaAba.document.createElement('br');
+		novaAba.document.body.appendChild(Div61);
+
+
+		novaAba.document.body.appendChild(tabela);
+
+	}
+
+</script>
+
+<script>
+
+	function conectarCubo() {
+
+		const statuscubo = document.getElementById("cubometro").innerText
+
+		if (statuscubo === 'Conectar Cubômetro') {
+			document.getElementById("statuscubo").innerHTML = 'Conectado ao Cubômetro.'
+			document.getElementById("cubometro").innerHTML = 'Desconectar Cubômetro'
+
+			const tipoObjeto = document.getElementById('tipoObjeto');
+			tipoObjeto.value = 'Pacote';
+			const eventoChange = new Event('change');
+			tipoObjeto.dispatchEvent(eventoChange);
+			document.getElementById("objeto").focus();
+
+			document.getElementById('altura').disabled = false;
+			document.getElementById('largura').disabled = false;
+			document.getElementById('comprimento').disabled = false;
+			document.getElementById('diametro').disabled = true;
+			document.getElementById('fixarDimensoes').checked = false;
+			document.getElementById('diametro').value = 0;
+			document.getElementById('nTipo').innerHTML = '002';
+			document.getElementById('dTipo').innerHTML = 'PACOTE';
+
+		} else {
+			document.getElementById("statuscubo").innerHTML = ''
+			document.getElementById("cubometro").innerHTML = 'Conectar Cubômetro'
+		}
+	}
+
+	function verConexao() {
+
+		if (document.getElementById("statuscubo").innerText === 'Conectado ao Cubômetro.') {
+			buscarCubo();
+		} else {
+			validarObjeto();
+		};
+
+	}
+
+</script>
+
+<script>
+
+	function ajustarPeso(str) {
+
+		if (str.length === 4) {
+			str = str.replace(/ /g, "0");
+		} else {
+			str = str.replace(/ /g, "");
+		}
+
+		return str;
+	}
+
+</script>
+
+<script>
+
+	function escreverMenu() {
+
+		var matricula = sessionStorage.getItem("matricula");
+
+		var data = {
+			conteudo: matricula
+		};
+
+		// REQUISIÇÃO POST COM AXIOS
+		axios.post('../Menus', data)
+			.then(function (response) {
+
+				document.getElementById('menu').innerHTML = response.data;
+				document.getElementById('conferenciamidia').classList.add('active');
+
+			})
+			.catch(function (error) {
+				// Manipular erros, se ocorrerem
+				console.error(error);
+				alert("Ocorreu um erro no servidor. Tente novamente.");
+			});
+
+	}
+
+	escreverMenu();
+
+</script>

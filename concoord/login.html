@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Projeto Concoord Web - Versão do Sistema : 15.0.3">
+	<meta name="author" content="Alex Luis Oliveira da Silva">
+	<meta name="keywords" content="Correios Empresas, Concoord, CEM Recife">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-logo-48x48.png" />
+
+	<title>Concoord 15.0.0</title>
+
+	<link href="css/app.css" rel="stylesheet">
+	<link href="css/cnd.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<main class="d-flex w-100">
+
+		<div class="container d-flex flex-column">
+			<div class="row vh-100">
+				<div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
+					<div class="d-table-cell align-middle">
+
+						<div class="text-center mt-4">
+							<img class="htitulo logotopo mb-3 " src="img/icons/logo_correios_360_menor.png" alt="">
+							<h1 class="htitulo mb-3 titulo-login">
+								<img src="img/icons/logo-concoord.png" alt=""
+									style="vertical-align: middle; margin-top: -5px;">
+								CONCOORD
+							</h1>
+<br>
+						
+						</div>
+						
+						<div class="border-secondary mb-3">
+							<div class="card-header">
+								<div class="m-sm-3">
+									<form>
+										
+										
+										<div class="mb-3">
+											<div id="alerta" class="alert-message text-white" style="display: none;">
+												<span id="textoalerta">alerta escrito Aqui</span>
+												<button type="button" class="btn-close" data-bs-dismiss="alert"
+													aria-label="Close" onclick="closemsgbox()"></button>
+											</div>
+											<label class="h6 text-muted">Matricula</label>
+											<input id="matricula" class="form-control form-control-lg" type="text"
+												name="matricula" placeholder="Informe a Matrícula"
+												onkeydown="enterMatricula(event)" />
+										</div>
+										<div class="mb-3">
+											<label class="h6 text-muted">Senha de Rede</label>
+											<input id="senha" class="form-control form-control-lg" type="password"
+												name="password" placeholder="Informe a senha de rede"
+												onkeydown="enterSenha(event)" />
+										</div>
+										<div>
+										</div>
+										<div class="mb-4 m-sm-1">
+											<span class="h6 form-check-label text-muted"> Ao clicar em login, você aceita os <a
+													href="termos.html">Termos de Uso.</a></span>
+										</div>
+										<div class="d-grid gap-2 mt-3">
+											<a class="align-items-center justify-content-center d-flex btn btn-lg btn-login btn-primary"
+												disabled="true;" onclick="efetuarLogin()">Login</a>
+										</div>
+										<br>
+
+									</form>
+								</div>
+							</div>
+						</div>
+						<br>
+						<br>
+						<br>
+						<div class="text-center mb-4 m-sm-1">
+							<h7>Bem-vindo ao CONCOORD, solução abrangente para CONtrole COORDenado de Operações e
+								Resultados.
+								O sistema utiliza análise de dados para fornecer insights e facilitar a tomada de
+								decisões.
+							</h7>
+						</div>
+					
+						<div class="text-center mb-3 m-sm-4">
+							<h7>Desenvolvimento: Alex Luis Oliveira da Silva - SE/PE</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+</body>
+
+</html>
+
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+	function efetuarLogin() {
+
+		adicionarOverlay();
+
+		var matricula = document.getElementById("matricula").value;
+		var senha = document.getElementById("senha").value;
+
+		var data = {
+			matricula: matricula,
+			senha: senha
+		};
+
+		// REQUISIÇÃO POST COM AXIOS
+		axios.post('../Login', data)
+			.then(function (response) {
+				const matricula = data.matricula;
+				const nome = escreverUsuario(response.data);
+				const setor = escreverSetor(response.data);
+				const mcu = escreverMcu(response.data);
+				sessionStorage.setItem("matricula", matricula);
+				sessionStorage.setItem("nome", nome);
+				sessionStorage.setItem("setor", setor);
+				sessionStorage.setItem("mcu", mcu);
+
+				if (typeof nome !== 'undefined' && nome !== null) {
+					window.location.href = "index.html";
+				} else {
+					msgbox('Usuário ou senha incorreto(a).')
+				}
+
+				removerOverlay();
+
+			})
+			.catch(function (error) {
+
+				console.error(error);
+				alert("Ocorreu um erro no servidor. Tente novamente.");
+			});
+
+
+	}
+</script>
+
+<script>
+
+	//ADICIONAR OVERLAY
+	function adicionarOverlay() {
+		var overlay = document.createElement('div');
+		overlay.id = 'loading-overlay';
+		overlay.className = 'overlay';
+
+		var loader = document.createElement('div');
+		loader.id = 'loader';
+		loader.className = 'loader';
+		overlay.appendChild(loader);
+
+		var loadingMessage = document.createElement('div');
+		loadingMessage.id = 'loading-message';
+		loadingMessage.innerHTML = '&nbsp; Verificando usuário...';
+		overlay.appendChild(loadingMessage);
+
+		document.body.appendChild(overlay);
+	}
+
+	// REMOVER OVERLAY
+	function removerOverlay() {
+		var overlay = document.getElementById('loading-overlay');
+		if (overlay) {
+			document.body.removeChild(overlay);
+		}
+	}
+
+</script>
+
+<script>
+
+	function escreverUsuario(usuario) {
+		const linhas = usuario.split('\n');
+		let nome = null;
+
+		if (linhas[0].includes("Sucesso ao se logar")) {
+
+			for (let i = 0; i < linhas.length; i++) {
+				if (linhas[i].includes("nome")) {
+					nome = deColchetes(linhas[i]);
+				}
+			}
+		}
+
+		return nome;
+	}
+
+	function escreverSetor(usuario) {
+		const linhas = usuario.split('\n');
+		let setor = null;
+
+		if (linhas[0].includes("Sucesso ao se logar")) {
+
+			for (let i = 0; i < linhas.length; i++) {
+				if (linhas[i].includes("departamento")) {
+					setor = deColchetes(linhas[i]);
+				}
+			}
+		}
+
+		return setor;
+
+	}
+
+	function escreverMcu(usuario) {
+		const linhas = usuario.split('\n');
+		let mcu = null;
+
+		if (linhas[0].includes("Sucesso ao se logar")) {
+
+			for (let i = 0; i < linhas.length; i++) {
+				if (linhas[i].includes("mcu")) {
+					mcu = deColchetes(linhas[i]);
+				}
+			}
+		}
+
+		return mcu;
+
+	}
+
+	function deColchetes(str) {
+		var regex = /\[(.*?)\]/;
+		var match = regex.exec(str);
+
+		if (match && match.length > 1) {
+			return match[1];
+		} else {
+			return null;
+		}
+	}
+
+
+</script>
+
+<script>
+
+	function enterMatricula(event) {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			document.getElementById("senha").focus();
+		}
+	}
+
+	function enterSenha(event) {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			efetuarLogin();
+		}
+	}
+
+</script>
+
+<script>
+
+	function msgbox(texto) {
+		document.getElementById("textoalerta").innerHTML = texto;
+		document.getElementById("alerta").style.display = "flex";
+	}
+
+	function closemsgbox() {
+		document.getElementById("alerta").style.display = "none";
+	}
+
+</script>
