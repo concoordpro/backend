@@ -124,7 +124,7 @@
 		};
 
 		// REQUISIÇÃO POST COM AXIOS
-		axios.post('../Login', data)
+		axios.post('./Login', data)
 			.then(function (response) {
 				const matricula = data.matricula;
 				const nome = escreverUsuario(response.data);
@@ -147,8 +147,7 @@
 			.catch(function (error) {
 
 				console.error(error);
-				alert(response.data);
-				//alert("Ocorreu um erro no servidor. Tente novamente.");
+				alert("Ocorreu um erro no servidor. Tente novamente.");
 			});
 
 
