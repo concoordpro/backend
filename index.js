@@ -3,7 +3,7 @@ const port = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
-  const msg = 'Hello Node!\n'
+  const msg = 'Aqui será o repositório do Concoord!\n'
   res.end(msg);
 });
 
