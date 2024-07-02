@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@google-cloud/appengine-admin": "^3.3.0"
-  }
-}
