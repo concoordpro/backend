@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Projeto Concoord Web - Versão do Sistema : 15.0.0">
+	<meta name="author" content="Alex Luis Oliveira da Silva">
+	<meta name="prototyping" content="AdminKit">
+	<meta name="keywords" content="Correios Empresas, Concoord, CEM Recife">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-logo-48x48.png" />
+	<!--Lembrar de alterar o ícone de logo, com Corel Draw-->
+
+	<title>Concoord 15.0.0</title>
+
+	<link href="css/app.css" rel="stylesheet">
+	<link href="css/cnd.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+</head>
+
+<body>
+
+	<script>
+
+		var matricula = sessionStorage.getItem("matricula");
+		var nome = sessionStorage.getItem("nome");
+		var setor = sessionStorage.getItem("setor");
+
+		if (matricula === null) {
+			window.location.href = "login.html";
+		}
+
+		var urlParams = new URLSearchParams(window.location.search);
+
+	</script>
+
+	<div class="wrapper">
+
+		<!--MENU LATERAL-->
+
+
+
+		<!--MENU EXPANSIVO-->
+
+		<div class="main">
+
+
+			<main id="resultados" class="content">
+
+
+				<div id="loading-overlay" class="overlay">
+					<div id="loader" class="loader"></div>
+					<div id="loading-message">&nbsp Buscando Resultados...</div>
+				</div>
+
+
+				<!--TITULO DO PAINEL-->
+
+
+				<div class="container-fluid p-0">
+
+					<div class="d-flex justify-content-between align-items-center">
+						<img class="logotopo mb-3 mr-3 align-self-center" src="img/icons/logo_correios_360_menor.png"
+							alt="">
+						<a id="btncopia"
+							class="align-items-center justify-content-center d-flex btn btn-lg btn-login btn-primary"
+							onclick="salvaPaginaComoPNG()">Salvar Tela</a>
+					</div>
+					<h1 class="htitulo mb-1 titulo-login">
+						<img src="img/icons/logo-concoord-cinza.png" alt=""
+							style="vertical-align: middle; margin-top: -5px;">
+						Resultado Gerencial
+					</h1>
+					<h6 id="dataPainel" class="mb-3 text-secondary">Extraído de http://sac0679/deinmexplorer/</h6>
+					<h5 id="escopo" class="mb-0 titulo-painel">SUPERINTENDÊNCIA ESTADUAL DE PERNAMBUCO</h5>
+					<hr class="hr0">
+
+					<script>
+
+						var matricula = sessionStorage.getItem("matricula");
+						var nome = sessionStorage.getItem("nome");
+						var setor = sessionStorage.getItem("setor");
+						var mcu = sessionStorage.getItem("mcu");
+
+					</script>
+
+					<!--PERÍODO ESCOLHIDO-->
+
+					<a class="btn btn-secondary dropdown-toggle mb-3" href="#" id="comboMes" role="button"
+						data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Acumulado de 2024
+					</a>
+					<div class="dropdown-menu col" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('JAN', 'Janeiro')">Janeiro</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('FEV', 'Fevereiro')">Fevereiro</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('MAR', 'Março')">Março</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('ABR', 'Abril')">Abril</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('MAI', 'Maio')">Maio</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('JUN', 'Junho')">Junho</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('JUL', 'Julho')">Julho</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('AGO', 'Agosto')">Agosto</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('SET', 'Setembro')">Setembro</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('OUT', 'Outubro')">Outubro</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('NOV', 'Novembro')">Novembro</a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('DEZ', 'Dezembro')">Dezembro</a>
+						<a class="dropdown-item" href="#"></a>
+						<a class="dropdown-item" href="#" onclick="selectPeriodo('ACU', 'Acumulado')">Acumulado 2024</a>
+					</div>
+
+
+					<script>
+						periodoEscolhido = urlParams.get('per');
+						console.log(periodoEscolhido);
+						document.getElementById('comboMes').value = 'Março de 2024';
+						function selectPeriodo(escolhaMes, nomeMes) { //FUNCAO DE ESCOLHA DE OUTRO PERÍODO
+							periodoEscolhido = escolhaMes;
+							buscarResultados();
+							console.log(periodoEscolhido);
+						}
+					</script>
+
+
+					<!--CARDS DE RESULTADOS-->
+
+					<div class="row">
+						<div class="col-xl-6 col-xxl-5 d-flex">
+							<div class="w-100">
+								<div class="row">
+									<div class="col-sm-6">
+
+										<!--CARD GERENCIAL-->
+
+										<div class="card shadow border">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h4 class="card-titulo">Receita Gerencial</h4>
+														<h5 class="text-muted card-subtitulo-2 margin-12">CARTEIRA + À
+															VISTA</h5>
+
+													</div>
+													<div class="py-3">
+														<div class="chart chart-xs card-grafico">
+															<canvas class="align-middle"
+																id="chartjs-dashboard-vazio"></canvas>
+														</div>
+													</div>
+												</div>
+												<div>
+													<div class="py-3 mb-3">
+														<div class="chart chart-xs card-grafico-gerencial">
+															<canvas class="align-middle"
+																id="chartjs-dashboard-gerencial"></canvas>
+														</div>
+													</div>
+													<h1 id="PercentualGerencial" class="pg card-resultado verde"> <i
+															class="mdi mdi-arrow-bottom-right"></i>%</h1>
+													<span id="ReceitaGerencial" class="mt-1 mb-3 h4">R$ </span>
+												</div>
+												<div class="mb-0">
+													<span id="MetaGerencial" class="text-muted card-subtitulo-2">META:
+														R$</span>
+												</div>
+												<div class="mb-0">
+													<span class="text-muted card-subtitulo-2 margin-15">CRESC (2023 -
+														2024):
+													</span>
+													<span id="AnteriorGerencial" class="mt-1 mb-3 h5c">0
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+
+										<!--CARD CARTEIRA-->
+
+										<div class="card shadow border margin-12">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-titulo h5-5">CARTEIRA</h5>
+													</div>
+													<div class="py-3 mb-2">
+														<div class="chart chart-xs card-grafico">
+															<canvas class="align-middle"
+																id="chartjs-dashboard-carteira"></canvas>
+														</div>
+													</div>
+												</div>
+												<div>
+													<h1 id="PercentualCarteira" class="card-resultado verde"> <i
+															class="mdi mdi-arrow-bottom-right"></i>%</h1>
+													<span id="ReceitaCarteira" class="mt-1 mb-3 h4">R$</span>
+												</div>
+												<div class="mb-0">
+													<span id="MetaCarteira" class="text-muted card-subtitulo-2">META:
+														R$</span>
+												</div>
+												<div class="mb-0">
+													<span class="text-muted card-subtitulo-2">CRESC (2023 - 2024):
+													</span>
+													<span id="AnteriorCarteira" class="mt-1 mb-3 h5c">0
+													</span>
+												</div>
+											</div>
+										</div>
+
+										<!--CARD À VISTA-->
+
+										<div class="card shadow border">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-titulo h5-5">À VISTA</h5>
+													</div>
+													<div class="py-3 mb-2">
+														<div class="chart chart-xs card-grafico">
+															<canvas class="align-middle"
+																id="chartjs-dashboard-vista"></canvas>
+														</div>
+													</div>
+												</div>
+												<div>
+													<h1 id="PercentualBalcao" class="card-resultado verde"> <i
+															class="mdi mdi-arrow-bottom-right"></i>%</h1>
+													<span id="ReceitaBalcao" class="mt-1 mb-3 h4">R$</span>
+												</div>
+												<div class="mb-0">
+													<span id="MetaBalcao" class="text-muted card-subtitulo-2"> META:
+														R$</span>
+												</div>
+												<div class="mb-0">
+													<span class="text-muted card-subtitulo-2">CRESC (2023 - 2024):
+													</span>
+													<span id="AnteriorBalcao" class="mt-1 mb-3 h5c">0
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<!--GRAFICO MES-->
+
+						<div class="col-xl-6 col-xxl-7">
+							<div class="flex-fill w-100">
+								<div class="card-header">
+									<h4 class="card-titulo mb-0">Volume de Receita</h4>
+									<h5 class="text-muted card-subtitulo-2">RECEITA OBTIDA EM 2024</h5>
+								</div>
+
+								<div class="card-body py-5">
+									<div class="chart chart-sm chart-volume">
+										<canvas id="chartjs-dashboard-line"></canvas>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<!--GRAFICO PARTICIPAÇÃO-->
+
+					<div class="row">
+						<div class="col-12 col-md-6 col-xxl-5 d-flex order-2 order-xxl-3">
+							<div class="flex-fill w-100">
+								<div class="card-header">
+
+									<h4 class="card-titulo mb-0">Participação por Segmentos</h4>
+									<h5 class="text-muted card-subtitulo-2">SEGMENTOS DE NEGÓCIOS</h5>
+
+								</div>
+
+								<!--SEGMENTO ESCOLHIDO-->
+
+								<a class="btn btn-secondary dropdown-toggle  mb-3" href="#" id="comboSegmento"
+									role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Todos os Segmentos
+								</a>
+								<div class="dropdown-menu col" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="#" onclick="selectSegmento('SEGMENTO')">Todos os
+										Segmentos</a>
+									<a class="dropdown-item" href="#"></a>
+									<a class="dropdown-item" href="#"
+										onclick="selectSegmento('ENCOMENDA')">Encomenda</a>
+									<a class="dropdown-item" href="#" onclick="selectSegmento('MENSAGEM')">Mensagem</a>
+									<a class="dropdown-item" href="#"
+										onclick="selectSegmento('INTERNACIONAL')">Internacional</a>
+									<a class="dropdown-item" href="#"
+										onclick="selectSegmento('MARKETING')">Marketing</a>
+									<a class="dropdown-item" href="#"
+										onclick="selectSegmento('CONVENIÊNCIA')">Conveniência</a>
+									<a class="dropdown-item" href="#" onclick="selectSegmento('OUTROS')">Outros</a>
+									<a class="dropdown-item" href="#"
+										onclick="selectSegmento('LOGÍSTICA')">Logística</a>
+									<a class="dropdown-item" href="#" onclick="selectSegmento('MALOTE')">Malote</a>
+								</div>
+
+								<script>
+									var segmentoEscolhido = urlParams.get('seg'); //INSTANCIA O SEGMENTO E ESCOLHE TODOS
+									console.log(segmentoEscolhido);
+									function selectSegmento(escolhaSegmento) { //FUNCAO DE ESCOLHA DE OUTRO SEGMENTO
+										segmentoEscolhido = escolhaSegmento;
+
+										if (segmentoEscolhido == 'SEGMENTO') {
+											document.getElementById('comboSegmento').innerHTML = 'Todos os Segmentos';
+										} else {
+											document.getElementById('comboSegmento').innerHTML = segmentoEscolhido.charAt(0).toUpperCase() + segmentoEscolhido.slice(1).toLowerCase();
+											segmentoEscolhido = "'" + segmentoEscolhido + "'"
+										}
+										buscarResultados();
+										console.log(segmentoEscolhido);
+									}
+								</script>
+
+								<!--TABELA SEGMENTOS-->
+
+								<div class="card-body d-flex">
+
+									<div class="align-self-center">
+										<table id="TabelaSegmentos" class="table mb-1 table-sm tabela-w17 h6">
+											<tbody>
+												<tr>
+													<td>ENCOMENDA</td>
+													<td class="text-end"></td>
+												</tr>
+												<tr>
+													<td>MENSAGEM</td>
+													<td class="text-end"></td>
+												</tr>
+												<tr>
+													<td>INTERNACIONAL</td>
+													<td class="text-end"></td>
+												</tr>
+												<tr>
+													<td>MARKETING</td>
+													<td class="text-end"></td>
+												</tr>
+												<tr>
+													<td>CONVENIÊNCIA</td>
+													<td class="text-end"></td>
+												</tr>
+												<tr>
+													<td>OUTROS</td>
+													<td class="text-end"></td>
+												</tr>
+												<tr>
+													<td>LOGÍSTICA</td>
+													<td class="text-end"></td>
+												</tr>
+												<tr>
+													<td>MALOTE</td>
+													<td class="text-end"></td>
+												</tr>
+											</tbody>
+										</table>
+
+										<script>
+
+											// FUNÇÕES DA TABELA SEGMENTOS
+
+											function adicionarLinhaSegmentos(legenda, valor, cor) {
+												var table = document.getElementById("TabelaSegmentos").getElementsByTagName('tbody')[0];
+												var newRow = table.insertRow(table.rows.length);
+												var cell1 = newRow.insertCell(0);
+												var cell2 = newRow.insertCell(1);
+												var cell3 = newRow.insertCell(2);
+												cell1.innerHTML = '<span class="badge" style="background-color: ' + cor + '; color: ' + cor + ';">A</span>';
+												cell2.innerHTML = legenda;
+												cell3.innerHTML = valor;
+												cell3.classList.add("text-end");
+											}
+
+											function excluirLinhaSegmentos() {
+												var table = document.getElementById("TabelaSegmentos").getElementsByTagName('tbody')[0];
+												for (let i = 0; i = table.rows.length; i++) {
+													table.deleteRow(table.rows.length - 1);
+												}
+											}
+
+											function classificarTabela(colIndex) {
+												var tabela, linhas, troca, i, x, y, deveTrocar;
+												tabela = document.getElementById("TabelaSegmentos");
+												deveTrocar = true;
+
+												while (deveTrocar) {
+													deveTrocar = false;
+													linhas = tabela.rows;
+
+													for (i = 0; i < (linhas.length - 1); i++) {
+														troca = false;
+														x = linhas[i].getElementsByTagName("td")[colIndex];
+														y = linhas[i + 1].getElementsByTagName("td")[colIndex];
+
+														var valorX = parseFloat(x.innerHTML.replace('%', '').replace(',', '.').trim());
+														var valorY = parseFloat(y.innerHTML.replace('%', '').replace(',', '.').trim());
+
+														if (isNaN(valorX) || isNaN(valorY)) {
+
+															continue;
+														}
+
+														if (valorX < valorY) {
+															troca = true;
+															break;
+														}
+													}
+													if (troca) {
+														linhas[i].parentNode.insertBefore(linhas[i + 1], linhas[i]);
+														deveTrocar = true;
+													}
+												}
+											}
+
+
+
+										</script>
+
+									</div>
+									<div class="card-body  w-100">
+										<div class="py-5">
+											<div class="chart chart-xs grafico-participacao">
+												<canvas id="chartjs-dashboard-participacao"></canvas>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!--GRAFICO ATINGIMENTO-->
+
+						<div class="col-12 col-md-6 col-xxl-7 d-flex order-1 order-xxl-3">
+							<div class="card flex-fill shadow border">
+								<div class="card-header">
+
+									<h4 class="card-titulo mb-0">Resultados Mensais</h4>
+									<h5 class="text-muted card-subtitulo-2">2024</h5>
+								</div>
+
+
+								<div class="card-body d-flex w-100">
+									<div class="align-self-center chart chart-sm grafico-mensais">
+										<canvas id="chartjs-dashboard-mensais"></canvas>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<script>
+						var forcaEscolhida = urlParams.get('nome');
+						console.log(forcaEscolhida);
+						document.getElementById('escopo').innerHTML = forcaEscolhida.replace("'", "").replace("'", "");
+					</script>
+
+				</div>
+		</div>
+	</div>
+	</main>
+
+	<!--RODAPÉ-->
+
+	<footer class="footer">
+		<div class="container-fluid">
+			<div class="row text-muted">
+				<div class="col-6 text-start">
+					<ul class="list-inline">
+						<li class="list-inline-item">
+							<a class="text-muted mb-0 h6" href="" target="_blank">
+								CONCOORD 15 - Plataforma Web
+							</a>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</footer>
+	</div>
+	</div>
+
+
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+	<script>
+
+		window.ggerencial;
+		window.gcarteira;
+		window.gbalcao;
+		window.rSegmentos;
+		window.rMensais;
+		window.mMensais;
+		window.pMensais;
+		window.rMensaisFormatados;
+		window.mMensaisFormatados;
+		window.inicial = true;
+		window.graficoParticipacao = null;
+		window.graficoGerencial = null;
+		window.graficoCarteira = null;
+		window.graficoBalcao = null;
+		window.graficoVolume = null;
+		window.graficoMensais = null;
+		window.ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+		window.gradient = ctx.createLinearGradient(0, 0, 0, 225);
+		gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+		gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+
+	</script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () { //INICIA O CÁLCULO, APÓS A PÁGINA SER CARREGADA
+
+			let cor;
+			let verde = '#5F9EA0';
+			let cinza = '#E7E7E7';
+			let amarelo = '#F5BD33';
+			let vermelho = '#CD5C5C';
+			let azul = '#316f97';
+
+			//GRAFICO GERENCIAL >>>>>
+
+			graficoGerencial = new Chart(document.getElementById("chartjs-dashboard-gerencial"), {
+				type: "doughnut",
+				data: {
+					labels: ["Atingido", "Falta"],
+					datasets: [{
+						data: [0, 20],
+						backgroundColor: [
+							'#316f97',
+							'#E7E7E7',
+						],
+						borderWidth: 0
+					}]
+				},
+				options: {
+					responsive: !window.MSInputMethodContext,
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false,
+						callbacks: {
+							label: function (tooltipItem, data) {
+								return ' ' + ating.format(graficoGerencial.data.datasets[0].data[tooltipItem.index]);
+							}
+						}
+					},
+					cutoutPercentage: 75
+				}
+			});
+
+			//GRÁFICO CARTEIRA >>>>>>
+
+			graficoCarteira = new Chart(document.getElementById("chartjs-dashboard-carteira"), {
+				type: "doughnut",
+				data: {
+					labels: ["Receita", "Falta"],
+					datasets: [{
+						data: [0, 20],
+						backgroundColor: [
+							'#316f97',
+							'#E7E7E7',
+						],
+						borderWidth: 0
+					}]
+				},
+				options: {
+					responsive: !window.MSInputMethodContext,
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false,
+						callbacks: {
+							label: function (tooltipItem, data) {
+								return ' ' + ating.format(graficoCarteira.data.datasets[0].data[tooltipItem.index]);
+							}
+						}
+					},
+					cutoutPercentage: 75
+				}
+			});
+
+			//GRÁFICO BALCÃO >>>>>>
+
+			graficoBalcao = new Chart(document.getElementById("chartjs-dashboard-vista"), {
+				type: "doughnut",
+				data: {
+					labels: ["Receita", "Falta"],
+					datasets: [{
+						data: [0, 20],
+						backgroundColor: [
+							'#316f97',
+							'#E7E7E7',
+						],
+						borderWidth: 0
+					}]
+				},
+				options: {
+					responsive: !window.MSInputMethodContext,
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false,
+						callbacks: {
+							label: function (tooltipItem, data) {
+								return ' ' + ating.format(graficoBalcao.data.datasets[0].data[tooltipItem.index]);
+							}
+						}
+					},
+					cutoutPercentage: 75
+				}
+			});
+
+			//GRAFICO PARTICIPAÇÃO >>>>>>
+
+			graficoParticipacao = new Chart(document.getElementById("chartjs-dashboard-participacao"), {
+				type: "pie",
+				data: {
+					labels: ["ENCOMENDA", "MENSAGEM", "INTERNACIONAL", "MARKETING", "CONVENIÊNCIA", "OUTROS", "LOGÍSITCA", "MALOTE"],
+					datasets: [{
+						data: [0, 0, 0, 0, 0, 0, 0, 0],
+						backgroundColor: [
+							'#4682B4',
+							'#B0C4DE',
+							'#708090',
+							'#A9A9A9',
+							'#DCDCDC',
+							'#4F4F4F',
+							'#787879',
+							'#34638a'
+						],
+						borderWidth: 0
+					}]
+				},
+				options: {
+					responsive: !window.MSInputMethodContext,
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+
+					},
+					tooltips: {
+						intersect: false,
+						callbacks: {
+							label: function (tooltipItem, data) {
+								return ' ' + graficoParticipacao.data.labels[tooltipItem.index] + ' ' + money.format(graficoParticipacao.data.datasets[0].data[tooltipItem.index]);
+							}
+						}
+					},
+					cutoutPercentage: 0.5
+
+				}
+			});
+
+			// GRAFICO VOLUME >>>>>>>>
+
+			function formatarValorEmMilharesMilhoes(value) { //FORMATAÇÃO MILHARES / MILHÕES
+				if (value >= 1000000) {
+					return (value / 1000000).toFixed(1) + " M";
+				} else if (value >= 1000) {
+					return (value / 1000).toFixed(1) + " k";
+				} else {
+					return value.toFixed(2);
+				}
+			}
+
+			ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+			gradient = ctx.createLinearGradient(0, 0, 0, 225);
+			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+			gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+
+			graficoVolume = new Chart(document.getElementById("chartjs-dashboard-line"), {
+				type: "line",
+				data: {
+					labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+					datasets: [{
+						label: "R$",
+						fill: true,
+						backgroundColor: gradient,
+						borderColor: window.theme.primary,
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false,
+						callbacks: {
+							label: function (tooltipItem, data) {
+								return money.format(graficoVolume.data.datasets[0].data[tooltipItem.index]);
+							}
+						}
+					},
+					hover: {
+						intersect: true
+					},
+					plugins: {
+						filler: {
+							propagate: false
+						}
+					},
+					scales: {
+						xAxes: [{
+							reverse: true,
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								stepSize: 1000,
+								callback: function (value, index, values) {
+									return formatarValorEmMilharesMilhoes(value);
+								}
+							},
+							display: true,
+							borderDash: [3, 3],
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}]
+					}
+				}
+			});
+
+			// GRÁFICO MENSAIS
+
+			graficoMensais = new Chart(document.getElementById("chartjs-dashboard-mensais"), {
+				type: "bar",
+				data: {
+					labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+					datasets: [
+						{
+							label: "Desempenho",
+							backgroundColor: '#DCDCDC',
+							borderColor: window.theme.primary,
+							//hoverBackgroundColor: ["#5F9EA0", "#F5BD33", "#CD5C5C", "#5F9EA0", "#F5BD33", "#CD5C5C", "#5F9EA0", "#F5BD33", "#CD5C5C", "#5F9EA0", "#F5BD33", "#CD5C5C"],
+							hoverBorderColor: window.theme.primary,
+							data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+							barPercentage: 2.8,
+							categoryPercentage: .32
+						},
+					]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					scales: {
+						yAxes: [{
+							gridLines: {
+								display: false
+							},
+							stacked: false,
+							ticks: {
+								callback: function (value, index, values) {
+									return value + '%';
+								}
+							}
+						}],
+						xAxes: [{
+							stacked: false,
+							gridLines: {
+								color: "transparent"
+							}
+						}]
+					},
+					tooltips: {
+						intersect: false,
+						callbacks: {
+							label: function (tooltipItem, data) {
+								return graficoMensais.data.datasets[0].data[tooltipItem.index] + '%';
+							}
+						}
+					},
+				}
+			});
+
+			buscarResultados();
+
+
+		});
+
+
+	</script>
+
+	<script>
+
+		// FORMATAÇÃO NUMÉRICA
+
+		const optionsmoney = { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 }
+		const money = new Intl.NumberFormat('pt-BR', optionsmoney)
+		const receitas = new Intl.NumberFormat('pt-BR', optionsmoney)
+		const optionspercentual = { style: 'percent', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 }
+		const ating = new Intl.NumberFormat('pt-BR', optionspercentual)
+
+
+		// FUNÇÕES DE REQUISIÇÃO DE RESULTADOS NO SERVIDOR
+
+		function buscarResultados() {
+
+			// CAMADA OVERLAY
+
+			document.getElementById('loader').classList.add('loader')
+			document.getElementById('loading-overlay').style.display = 'block';
+			document.getElementById('loading-overlay').style.display = 'flex';
+			document.getElementById('loading-overlay').style.alignItems = 'center';
+			document.getElementById('loading-overlay').style.justifyContent = 'center';
+
+
+			// REQUISIÇÃO POST
+
+			axios.post('../PainelFVendas', {
+				periodoEscolhido,
+				segmentoEscolhido,
+				forcaEscolhida
+
+			})
+				.then(function (response) {
+
+					console.log(response.data)
+					var dados = response.data
+
+					informaMes(periodoEscolhido)
+					informaSegmento(segmentoEscolhido)
+
+					//RESULTADO GERENCIAL
+
+					document.getElementById('dataPainel').innerHTML = 'Extraído de http://sac0679/deinmexplorer/ (Dados Atualizados Até ' + dados.rData[0].DATAPAINEL + ')'
+					document.getElementById('ReceitaGerencial').innerHTML = money.format(dados.rGerencial)
+					document.getElementById('MetaGerencial').innerHTML = 'META: ' + money.format(dados.mGerencial)
+					document.getElementById('AnteriorGerencial').innerHTML = (dados.aGerencial.crescimento * 100).toFixed(2) + '%'
+					document.getElementById('AnteriorGerencial').style.color = dados.aGerencial.cor
+					document.getElementById('PercentualGerencial').innerHTML = ating.format(dados.pGerencial)
+					document.getElementById('PercentualGerencial').style.color = dados.gGerencial.cor
+					graficoGerencial.data.datasets[0].data = dados.gGerencial.percentual;
+					graficoGerencial.data.datasets[0].backgroundColor = [dados.gGerencial.cor, '#E7E7E7'];
+					graficoGerencial.update();
+
+					//RESULTADO CARTEIRA
+
+					document.getElementById('ReceitaCarteira').innerHTML = money.format(dados.rCarteira)
+					document.getElementById('MetaCarteira').innerHTML = 'META: ' + money.format(dados.mCarteira)
+					document.getElementById('AnteriorCarteira').innerHTML = (dados.aCarteira.crescimento * 100).toFixed(2) + '%'
+					document.getElementById('AnteriorCarteira').style.color = dados.aCarteira.cor
+					document.getElementById('PercentualCarteira').innerHTML = ating.format(dados.pCarteira)
+					document.getElementById('PercentualCarteira').style.color = dados.gCarteira.cor
+					graficoCarteira.data.datasets[0].data = dados.gCarteira.percentual;
+					graficoCarteira.data.datasets[0].backgroundColor = [dados.gCarteira.cor, '#E7E7E7'];
+					graficoCarteira.update();
+
+					//RESULTADO À VISTA
+
+					document.getElementById('ReceitaBalcao').innerHTML = money.format(dados.rBalcao)
+					document.getElementById('MetaBalcao').innerHTML = 'META: ' + money.format(dados.mBalcao)
+					document.getElementById('AnteriorBalcao').innerHTML = (dados.aBalcao.crescimento * 100).toFixed(2) + '%'
+					document.getElementById('AnteriorBalcao').style.color = dados.aBalcao.cor
+					document.getElementById('PercentualBalcao').innerHTML = ating.format(dados.pBalcao)
+					document.getElementById('PercentualBalcao').style.color = dados.gBalcao.cor
+					graficoBalcao.data.datasets[0].data = dados.gBalcao.percentual;
+					graficoBalcao.data.datasets[0].backgroundColor = [dados.gBalcao.cor, '#E7E7E7'];
+					graficoBalcao.update();
+
+					//PARTICIPAÇÃO POR SEGMENTOS
+
+					const cSegmentos = ['#4682B4', '#B0C4DE', '#708090', '#A9A9A9', '#DCDCDC', '#4F4F4F', '#787879', '#34638a']
+					const lSegmentos = ["ENCOMENDA", "MENSAGEM", "INTERNACIONAL", "MARKETING", "CONVENIÊNCIA", "OUTROS", "LOGÍSITCA", "MALOTE"]
+					const pSegmentos = [ating.format(dados.sEncomenda / dados.rGerencial), ating.format(dados.sMensagem / dados.rGerencial), ating.format(dados.sInternacional / dados.rGerencial), ating.format(dados.sMarketing / dados.rGerencial), ating.format(dados.sConveniencia / dados.rGerencial), ating.format(dados.sOutros / dados.rGerencial), ating.format(dados.sLogistica / dados.rGerencial), ating.format(dados.sMalote / dados.rGerencial)]
+
+					excluirLinhaSegmentos()//EXCLUI AS LINHAS EXISTENTES... 
+					for (let i = 0; i < dados.rSegmentos.length; i++) { //...ESCREVE AS NOVAS LINHAS...
+						if (dados.rSegmentos[i] != 0) { adicionarLinhaSegmentos(lSegmentos[i], pSegmentos[i], cSegmentos[i]) }
+					}
+					classificarTabela(2)//...E CLASSIFICA
+
+					graficoParticipacao.data.datasets[0].data = dados.rSegmentos;
+					graficoParticipacao.update();
+
+					//VOLUME DE RECEITA
+
+					graficoVolume.data.datasets[0].data = dados.rMensal;
+					graficoVolume.update();
+
+					//RESULTADOS MENSAIS
+
+					const percentuais = dados.rDesempenho.map(valor => (valor * 100).toFixed(2));
+
+					graficoMensais.data.datasets[0].data = percentuais;
+					graficoMensais.data.datasets[0].backgroundColor = dados.rCores;
+					graficoMensais.update();
+
+					document.getElementById('loader').classList.remove('loader');
+					document.getElementById('loading-overlay').style.display = 'none';
+
+
+				})
+
+				.catch(function (error) {
+					console.error(error);
+				});
+
+		}
+
+
+	</script>
+
+	<script>
+
+		function informaMes(periodoEscolhido) {
+
+			if (periodoEscolhido === 'JAN') {
+				document.getElementById('comboMes').innerHTML = 'Janeiro de 2024';
+			} else if (periodoEscolhido === 'FEV') {
+				document.getElementById('comboMes').innerHTML = 'Fevereiro de 2024';
+			} else if (periodoEscolhido === 'MAR') {
+				document.getElementById('comboMes').innerHTML = 'Março de 2024';
+			} else if (periodoEscolhido === 'ABR') {
+				document.getElementById('comboMes').innerHTML = 'Abril de 2024';
+			} else if (periodoEscolhido === 'MAI') {
+				document.getElementById('comboMes').innerHTML = 'Maio de 2024';
+			} else if (periodoEscolhido === 'JUN') {
+				document.getElementById('comboMes').innerHTML = 'Junho de 2024';
+			} else if (periodoEscolhido === 'JUL') {
+				document.getElementById('comboMes').innerHTML = 'Julho de 2024';
+			} else if (periodoEscolhido === 'AGO') {
+				document.getElementById('comboMes').innerHTML = 'Agosto de 2024';
+			} else if (periodoEscolhido === 'SET') {
+				document.getElementById('comboMes').innerHTML = 'Setembro de 2024';
+			} else if (periodoEscolhido === 'OUT') {
+				document.getElementById('comboMes').innerHTML = 'Outubro de 2024';
+			} else if (periodoEscolhido === 'NOV') {
+				document.getElementById('comboMes').innerHTML = 'Novembro de 2024';
+			} else if (periodoEscolhido === 'DEZ') {
+				document.getElementById('comboMes').innerHTML = 'Dezembro de 2024';
+			} else if (periodoEscolhido === 'ACU') {
+				document.getElementById('comboMes').innerHTML = 'Acumulado de 2024';
+			}
+
+		}
+
+
+		function informaSegmento(segmentoEscolhido) {
+
+			switch (segmentoEscolhido) {
+				case "'ENCOMENDA'":
+					document.getElementById('comboSegmento').innerHTML = 'Encomenda';
+					break;
+				case "'MENSAGEM'":
+					document.getElementById('comboSegmento').innerHTML = 'Mensagem';
+					break;
+				case "'INTERNACIONAL'":
+					document.getElementById('comboSegmento').innerHTML = 'Internacional';
+					break;
+				case "'MARKETING'":
+					document.getElementById('comboSegmento').innerHTML = 'Marketing';
+					break;
+				case "'CONVENIÊNCIA'":
+					document.getElementById('comboSegmento').innerHTML = 'Conveniência';
+					break;
+				case "'OUTROS'":
+					document.getElementById('comboSegmento').innerHTML = 'Outros';
+					break;
+				case "'LOGÍSTICA'":
+					document.getElementById('comboSegmento').innerHTML = 'Logística';
+					break;
+				case "'MALOTE'":
+					document.getElementById('comboSegmento').innerHTML = 'Malote';
+					break;
+				case "SEGMENTO":
+					document.getElementById('comboSegmento').innerHTML = 'Todos os Segmentos';
+					break;
+				default:
+					document.getElementById('comboSegmento').innerHTML = 'Segmento não especificado';
+			}
+		}
+
+
+	</script>
+
+	<script>
+
+		function CopiaPaginaComoPNG() { //SOMENTE FUNCIONA NO SERVIDOR LOCAL OU EM HTTPS 
+
+			document.getElementById('btncopia').style.visibility = 'hidden';
+
+			html2canvas(document.body, {
+				allowTaint: true,
+				useCORS: true,
+				onrendered: function (canvas) {
+
+					canvas.toBlob(function (blob) {
+
+						var item = new ClipboardItem({ 'image/png': blob });
+
+						navigator.clipboard.write([item])
+							.then(function () {
+								document.getElementById('btncopia').style.visibility = 'visible';
+								alert('Tela salva na área de transferência. \nEscolha o local de destino e clique Ctrl + V');
+							})
+							.catch(function (error) {
+								console.log(error);
+								alert('Erro ao copiar imagem para a área de transferência:', error);
+							});
+					}, 'image/png');
+				}
+
+			});
+
+
+		}
+		function salvaPaginaComoPNG() {
+
+			document.getElementById('btncopia').style.visibility = 'hidden';
+
+			html2canvas(document.body, {
+				allowTaint: true,
+				useCORS: true,
+				onrendered: function (canvas) {
+
+					canvas.toBlob(function (blob) {
+
+						var url = URL.createObjectURL(blob);
+
+						const escopo = document.getElementById('escopo').innerHTML;
+						const periodo = document.getElementById('comboMes').innerHTML;
+
+						var a = document.createElement('a');
+						a.style.display = 'none';
+						a.href = url;
+						a.download = escopo + ' - ' + periodo + '.png';
+						document.body.appendChild(a);
+
+						a.click();
+
+						document.body.removeChild(a);
+
+						URL.revokeObjectURL(url);
+
+						document.getElementById('btncopia').style.visibility = 'visible';
+						alert('Resultados salvos na pasta Downloads.');
+					}, 'image/png');
+				}
+			});
+		}
+
+
+
+	</script>
+
+</body>
+
+</html>

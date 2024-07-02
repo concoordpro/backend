@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Projeto Concoord Web - Versão do Sistema : 15.0.0">
+	<meta name="author" content="Alex Luis Oliveira da Silva">
+	<meta name="prototyping" content="AdminKit">
+	<meta name="keywords" content="Correios Empresas, Concoord, CEM Recife">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-logo-48x48.png" />
+	<!--Lembrar de alterar o ícone de logo, com Corel Draw-->
+
+	<title>Concoord 15.0.0</title>
+
+	<link href="css/app.css" rel="stylesheet">
+	<link href="css/cnd.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+	
+
+</head>
+
+<body onload="setFocus()">
+	<div class="wrapper">
+
+		<script>
+
+			var matricula = sessionStorage.getItem("matricula");
+			var nome = sessionStorage.getItem("nome");
+			var setor = sessionStorage.getItem("setor");
+
+			if (matricula === null) {
+				window.location.href = "login.html";
+			}
+
+		</script>
+
+		<!--MENU LATERAL-->
+
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<img class="mb-0" src="img/bkg/sidebar-top.png" alt="Logo Concoord">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+				</a>
+
+				<div id="menu">
+
+				</div>
+
+			</div>
+		</nav>
+
+		<!--MENU EXPANSIVO-->
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+
+				<!--BARRA SUPERIOR-->
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+
+						<li class="nav-item dropdown d-flex">
+							<div class="align-items-center justify-content-center d-flex text-muted mb-0 h5-5"
+								id="nome">USUÁRIO</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="subbody content">
+
+				<!--TITULO DO PAINEL-->
+
+				<div class="container-fluid p-0">
+					<img class="logotopo mb-3 " src="img/icons/logo_correios_360_menor.png" alt="">
+					<h1 class="htitulo mb-1 titulo-login">
+						<img src="img/icons/logo-concoord-cinza.png" alt=""
+							style="vertical-align: middle; margin-top: -5px;">
+						Encomendas Postadas
+					</h1>
+					
+					<h6 class="mb-3 text-secondary">Conferência de Postagem e Expedição</h6>
+					
+					<hr>
+					<div class="col-md-4" style="margin-bottom: 15px;">
+						<input type="text" id="conteudoInput" placeholder="Informe o código do objeto..."
+							class="col-4 form-control form-control-lg mb-2">
+					</div>
+
+					<!--BUSCA-->
+
+					<div class="card shadow border mb-0">
+
+
+						<div class="card-header card text-white" id="CardPlanos" style="min-height: 170px;">
+							<h8 class="h8" id="Planos"></h8>
+						</div>
+						<div class="card-footer" style="min-height: 140px;">
+							<div class="h1" id="espelhoObjeto"></div>
+							<div class="h5 text-muted" id="unidadeOrigem"></div>
+							<div class="h5 text-muted" id="municipioOrigem"></div>
+							<div class="h4" id="dataPostagem"></div>
+							<div class="h4 text-muted" id="cepDestino"></div>
+						</div>
+					</div>
+				</div>
+				<hr>
+
+
+			</main>
+
+			<!--DIV FLUTUANTE - NÃO EXPEDIDO-->
+
+			<div id="falhaExpedicao" class="alerta card bg-danger shadow border" style="display: none;">
+				<div class="h1 text-white" style="margin: 0px;" id="textoSelecao">VERIFICADA FALHA NA EXPEDIÇÃO AUTOMÁTICA</div>
+			</div>
+
+			<!--RODAPÉ-->
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted mb-0 h6" href="" target="_blank">
+										CONCOORD 15 - Plataforma Web
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-6 text-end">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="h6" href="" target="_blank">Ajuda</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="h6" href="" target="_blank">Termos de Uso</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="h6" href="" target="_blank">Privacidade</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+	<script>
+		// SELECIONAR CAMPO DE BUSCA AO ABRIR A PÁGINA
+		function setFocus() {
+
+			var inputElement = document.getElementById('conteudoInput');
+			inputElement.focus();
+
+		}
+	</script>
+
+	<script>
+
+		// VALIDAÇÃO DO INPUT
+		function validarInput() {
+			var conteudoInput = document.getElementById('conteudoInput').value;
+
+			// CASO VAZIO
+			if (conteudoInput.trim() === "") {
+				alert("Por favor, informe o código do objeto.");
+				return false; // IMPEDE O ENVIO DO FORMULARIO CASO VAZIO
+			}
+			// CASO POSSUA UM FORMATO DE ETIQUETA VÁLIDA
+			else if (/^[a-zA-Z]{2}\d{9}[a-zA-Z]{2}$/.test(conteudoInput)) {
+				// CONVERTE MAIUSCULAS
+				var texto = document.getElementById('conteudoInput').value;
+				var maiusc = texto.toUpperCase();
+				document.getElementById('conteudoInput').value = maiusc;
+				document.getElementById('conteudoInput').select();
+				enviarRequisicao();
+			}
+			// CASO QRCODE
+			else if (conteudoInput.length > 20 && /([a-zA-Z]{2}\d{9}[a-zA-Z]{2})/.test(conteudoInput)) {
+				document.getElementById('conteudoInput').value = conteudoInput.match(/([a-zA-Z]{2}\d{9}[a-zA-Z]{2})/)[0];
+				document.getElementById('conteudoInput').select();
+				enviarRequisicao();
+			}
+			// CASO NENHUM DOS CASOS ANTERIORES SEJA SATISFEITO
+			else {
+				document.getElementById('conteudoInput').select();
+			}
+
+		}
+
+		// ADICIONA UM OUVINTE NO INPUT, PARA A TECLA ENTER
+		document.getElementById('conteudoInput').addEventListener('keyup', function (event) {
+			// ZERA A ANIMAÇÃO
+			document.getElementById('CardPlanos').classList.remove('bg-primary');
+			document.getElementById('CardPlanos').classList.remove('bg-secondary');
+			document.getElementById('CardPlanos').classList.remove('bg-success');
+			document.getElementById('CardPlanos').classList.remove('bg-danger');
+			document.getElementById('CardPlanos').classList.remove('bg-warning');
+			document.getElementById('CardPlanos').classList.remove('bg-info');
+			document.getElementById('CardPlanos').classList.remove('bg-light');
+			document.getElementById('CardPlanos').classList.remove('bg-dark');
+			document.getElementById('CardPlanos').classList.remove('text-dark');
+			document.getElementById('CardPlanos').classList.remove('text-white');
+			document.getElementById('dataPostagem').classList.remove('text-dark');
+			document.getElementById('dataPostagem').classList.remove('text-danger');
+			document.getElementById('Planos').classList.remove('piscar');
+			document.getElementById('Planos').innerHTML = " ";
+			document.getElementById('espelhoObjeto').innerHTML = "";
+			document.getElementById('unidadeOrigem').innerHTML = "";
+			document.getElementById('municipioOrigem').innerHTML = "";
+			document.getElementById('dataPostagem').innerHTML = "";
+			document.getElementById('cepDestino').innerHTML = "";
+			document.getElementById('falhaExpedicao').style.display = 'none';
+
+			if (event.key === 'Enter') {
+				validarInput();
+			}
+		});
+
+	</script>
+
+	<script>
+
+		function enviarRequisicao() {
+
+			var objeto = document.getElementById("conteudoInput").value;
+
+			// Formate o objeto como parte de um objeto de dados
+			var data = {
+				conteudo: objeto,
+				mcu: mcu,
+				nome: nome
+			};
+
+			// REQUISIÇÃO POST COM AXIOS
+			axios.post('../Rastro', data)
+				.then(function (response) {
+					console.log(response.data);
+
+					document.getElementById('Planos').innerHTML = response.data.planoExpedicao;
+					document.getElementById('espelhoObjeto').innerHTML = document.getElementById('conteudoInput').value;
+					document.getElementById('unidadeOrigem').innerHTML = response.data.unidadeOrigem;
+					document.getElementById('municipioOrigem').innerHTML = response.data.municipioOrigem;
+					document.getElementById('dataPostagem').innerHTML = response.data.dataPostagem;
+					document.getElementById('cepDestino').innerHTML = response.data.destino;
+					document.getElementById('CardPlanos').classList.add(response.data.corFundo);
+					document.getElementById('CardPlanos').classList.add(response.data.corTexto);
+					document.getElementById('dataPostagem').classList.add(response.data.postadoHoje);
+					document.getElementById('Planos').classList.add('piscar');
+
+					if (response.data.expedicao === 'NAO EXPEDIDO') {
+						document.getElementById('falhaExpedicao').style.display = 'block';
+					}
+
+				})
+				.catch(function (error) {
+					// Manipular erros, se ocorrerem
+					console.error(error);
+					alert("Ocorreu um erro no servidor. Tente novamente.");
+				});
+
+
+		}
+
+	</script>
+
+	<script>
+
+		var matricula = sessionStorage.getItem("matricula");
+		var nome = sessionStorage.getItem("nome");
+		var setor = sessionStorage.getItem("setor");
+		var mcu = sessionStorage.getItem("mcu");
+		document.getElementById('nome').innerHTML = mcu + " - " + setor + "&nbsp&nbsp | &nbsp&nbsp" +nome;
+
+	</script>
+
+	<script>
+
+		function escreverMenu() {
+
+			var matricula = sessionStorage.getItem("matricula");
+
+			var data = {
+				conteudo: matricula
+			};
+
+			// REQUISIÇÃO POST COM AXIOS
+			axios.post('../Menus', data)
+				.then(function (response) {
+
+					document.getElementById('menu').innerHTML = response.data;
+					document.getElementById('planos').classList.add('active');
+
+				})
+				.catch(function (error) {
+					// Manipular erros, se ocorrerem
+					console.error(error);
+					alert("Ocorreu um erro no servidor. Tente novamente.");
+				});
+
+		}
+
+		escreverMenu();
+
+	</script>
