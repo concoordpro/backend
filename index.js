@@ -1,3 +1,11 @@
+import { initializeApp } from 'firebase/app';
+
+const firebaseConfig = {
+  // Seu objeto de configuração do Firebase
+};
+
+const app = initializeApp(firebaseConfig);
+
 const http = require('http');
 const port = process.env.PORT || 8080;
 
