@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port = 8080;
+const port || 8080;
 const host = '0.0.0.0';
 import Rastrear from './srointranet.js';
 import verificarPlanos from './planos.js';
