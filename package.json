@@ -1,5 +1,5 @@
 {
-  "name": "concoordweb",
+  "name": "concoordpro",
   "version": "1.0.0",
   "description": "",
   "main": "./server/server.js",
@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/concoordweb/main"
+    "url": "https://github.com/concoordpro/backend"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/concoordweb/main"
+    "url": "https://github.com/concoordpro/backend"
   },
-  "homepage": "https://https://github.com/concoordweb/main#readme"
+  "homepage": "https://https://github.com/concoordpro/backend#readme"
 }
