@@ -1,20 +1,19 @@
 //DEPENDENCIAS >>>>>>>
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import { fileURLToPath, URL } from 'url';
-import { dirname } from 'path';
-import fs from 'fs';
-import { promises as fsPromises } from 'fs';
-import multer from 'multer';
-import path from 'path';
-
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const { fileURLToPath, URL } = require('url');
+const { dirname } = require('path');
+const fs = require('fs');
+const { promises: fsPromises } = require('fs');
+const multer = require('multer');
+const path = require('path');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port || 8080;
+const port = 8080;
 const host = '0.0.0.0';
 import Rastrear from './srointranet.js';
 import verificarPlanos from './planos.js';
