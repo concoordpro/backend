@@ -2,7 +2,7 @@
   "name": "concoordpro",
   "version": "1.0.0",
   "description": "",
-  "main": "./server/server.js",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
