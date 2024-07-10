@@ -5,7 +5,7 @@ const port = process.env.PORT || 8080;
 // Define uma rota para o caminho raiz "/"
 app.get('/', (req, res) => {
   res.statusCode = 200;
-  const msg = 'Repositorio do Concoord, Backend 10/07/2024 08:09\n';
+  const msg = 'Repositorio do Concoord, Backend 10/07/2024 08:18\n';
   res.send(msg);
 });
 
