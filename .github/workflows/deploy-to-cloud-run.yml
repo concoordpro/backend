@@ -26,7 +26,7 @@ jobs:
       - name: Build and push Docker image
         env:
           PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-          IMAGE: gcr.io/${{ secrets.GCP_PROJECT_ID }}/concoordpro
+          IMAGE: gcr.io/${{ secrets.GCP_PROJECT_ID }}/concoordprobackend
         run: |
           docker build . -t $IMAGE
           docker push $IMAGE
@@ -36,7 +36,7 @@ jobs:
           PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
           REGION: us-central1  # ajuste para a região desejada
           SERVICE_NAME: nome-do-seu-servico
-          IMAGE: gcr.io/${{ secrets.GCP_PROJECT_ID }}/concoordpro
+          IMAGE: gcr.io/${{ secrets.GCP_PROJECT_ID }}/concoordprobackend
         run: |
           gcloud run deploy $SERVICE_NAME \
             --image $IMAGE \
